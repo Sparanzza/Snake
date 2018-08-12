@@ -43,14 +43,71 @@ def gameOver():
     GOrect.midtop = (360 , 15)
     playSurface.blit( GOsurf , GOrect)
     pygame.display.flip()
+    time.sleep(5)
+    pygame.quit()
+    sys.exit()
+
+#logic loop of game
+while 1:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit(-1)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                changeto = 'RIGHT'
+            elif event.key == pygame.K_LEFT or event.key == ord('a'):
+                changeto = 'LEFT'
+            elif event.key == pygame.K_UP or event.key == ord('w'):
+                changeto = 'UP'
+            elif event.key == pygame.K_DOWN or event.key == ord('s'):
+                changeto = 'DOWN'
+            elif event.key == pygame.K_ESCAPE:
+                pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+    #validation direction
+    if changeto == 'RIGHT' and not direction == 'LEFT':
+        direction =='RIGHT'
+        #validation direction
+    if changeto == 'LEFT' and not direction == 'RIGHT':
+        direction =='LEFT'
+        #validation direction
+    if changeto == 'UP' and not direction == 'DOWN':
+        direction =='UP'
+        #validation direction
+    if changeto == 'DOWN' and not direction == 'UP':
+        direction =='DOWN'
+
+    if direction == 'RIGHT':
+        snakePos[0] += 10
+    if direction == 'LEFT':
+        snakePos[0] -= 10
+    if direction == 'UP':
+        snakePos[1] -= 10
+    if direction == 'DOWN':
+        snakePos[1] += 10
+
+    #body mechanism
+    snakeBody.insert(0, list(snakePos))
+    if snakePos[0] == foodPos[0] and snakePos[1] ==foodPos[1]:
+        foodSpawn = False
+    else:
+        snakeBody.pop()
+
+    if foodSpawn == False:
+        foodPos = [random.randrange(1,72)*10, random.randrange(1,46)*10]
+
+    foodSpawn = True
 
 
 
-gameOver()
 
 
 
 
-time.sleep(5)
+
+
+
+
 
 
